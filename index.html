@@ -4,7 +4,9 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Warning Card</title>
+    <link rel="icon" type="image/png" href="image/img1.png">
+    <title>Derojatul Jannah</title>
+    <link rel="icon" type="image/png" href="image/img1.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,9 +87,14 @@
             color: #ff3b3b;
             animation: criticalBlink 1.2s ease-in-out infinite;
         }
-        img {
+        .main-img {
             height: 120px;
             width: 150px;
+        }
+        .footer-img {
+            height: 60px;
+            width: 60px;
+            margin-bottom: 5px;
         }
 
         /* Blink lebih cepat & tegas */
@@ -111,9 +118,15 @@
 </head>
 
 <body>
+    <div style="position: absolute; font-size: 16px; color: #afafaf; bottom: 10px; right: 10px;">
+        <div style="text-align: center;">
+            <img class="footer-img" src="image/img4.png" alt="">
+            <div>Derojatul Jannah</div>
+        </div>
+    </div>
     <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 50px;">
         <div id="my-text" style="color: aliceblue; font-size: 30px; margin-bottom: 15px;">Kamu sayang aku gak sayang?</div>
-        <img  id="img" src="image/img1.png" alt="">
+        <img  id="img" class="main-img" src="image/img1.png" alt="">
     </div>
     <div style="display: flex; flex-direction: row; gap: 12px; justify-content: center;">
         <div id = "btn_y" class="warning-card" style="cursor: pointer;">
