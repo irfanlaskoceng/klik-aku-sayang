@@ -11,7 +11,8 @@
         body {
             font-family: Arial, sans-serif;
             background: #27263e;
-            padding: 40px;
+            padding: 0;
+            margin: 0;
         }
 
         
@@ -102,6 +103,7 @@
             height: 70px;
             width: 70px;
             margin-bottom: 5px;
+            animation: slideLoop 1s linear infinite alternate;
         }
 
         /* Blink lebih cepat & tegas */
@@ -121,23 +123,36 @@
                 box-shadow: 0 0 0 rgba(255, 59, 59, 0);
             }
         }
+
+        @keyframes slideLoop  {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(var(--slide-distance));
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div style="position: absolute; font-size: 16px; color: #afafaf; bottom: 10px; right: 10px; z-index: 0;">
-        <div style="text-align: center;">
-            <img class="footer-img" src="image/img4.png" alt="">
+    <div style="position: absolute; font-size: 16px; color: #afafaf; bottom: 35px; z-index: 0; width: 100%; ">
+        <div style="display: flex; align-items: center; margin-left: 20px; margin-right: 20px;">
+            <div id="parent-img-left" style="flex: 1;">
+                <img class="footer-img2" src="image/img5.png" alt="">
+            </div>
+            <div id="parent-img-right">
+                <img class="footer-img" src="image/img4.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute; font-size: 16px; color: #afafaf; bottom: 10px; z-index: 0; width: 100%;">
+        <div style="display: flex;justify-content: space-between; margin-left: 20px; margin-right: 20px;">
+            <div>Muhammad Irfan</div>
             <div>Derojatul Jannah</div>
         </div>
     </div>
-    <div style="position: absolute; font-size: 16px; color: #afafaf; bottom: 10px; left: 10px; z-index: 0;">
-        <div style="text-align: center;">
-            <img class="footer-img2" src="image/img5.png" alt="">
-            <div>Muhammad Irfan</div>
-        </div>
-    </div>
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 50px;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 50px; margin-top: 60px;">
         <div id="my-text" style="color: aliceblue; font-size: 30px; margin-bottom: 15px;">Kamu sayang aku gak sayang?</div>
         <img  id="img" class="main-img" src="image/img1.png" alt="">
     </div>
@@ -157,6 +172,16 @@
   const btn = document.getElementById("btn");
   const btn_y = document.getElementById("btn_y");
   const my_text = document.getElementById("my-text");
+  const footer_img2 = document.querySelector(".footer-img2");
+  const parent_img_left = document.getElementById("parent-img-left");
+  const parent_img_right = document.getElementById("parent-img-right");
+  const slide_distance = parent_img_left.offsetWidth - parent_img_right.offsetWidth - 10;
+  const speed = 60; // pixel per detik (ubah sesuai kebutuhan)
+  const duration = slide_distance / speed;
+  
+  footer_img2.style.setProperty("--slide-distance", slide_distance + "px");
+  footer_img2.style.animationDuration = duration + "s";
+
   let setItv;
 
   let n = 1;
