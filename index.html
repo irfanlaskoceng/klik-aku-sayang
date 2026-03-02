@@ -131,6 +131,7 @@
   const btn = document.getElementById("btn");
   const btn_y = document.getElementById("btn_y");
   const my_text = document.getElementById("my-text");
+  let setItv;
 
   let n = 1;
   let text_btn_n = {'1':'Tidak', '2': 'Please jangan tidak', '3': 'Please jangan tidak sayang...'}
@@ -147,6 +148,10 @@
     btn.style.top = randomY + "px";
   }
 
+    function isMobile() {
+        return window.innerWidth <= 1000;
+    }
+
   
 
   btn.addEventListener("click", () => {
@@ -158,6 +163,11 @@
     }
     if (n === 4) {
         bottonPos();
+        if (isMobile()) {
+           setItv = setInterval(() => {
+                bottonPos();
+            }, 1000); 
+        }
     }
   });
   btn.addEventListener("mouseenter", () => {
@@ -167,6 +177,7 @@
   });
 
   btn_y.addEventListener("click", () => {
+    clearInterval(setItv)
         n = 1000;
         img.src = `image/img0.jpg`;
         my_text.innerText = `Terima kasih sayang... saya juga sayang km kok 😘`;
