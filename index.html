@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Warning Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #27263e;
+            padding: 40px;
+        }
+
+        
+        @keyframes pulseBorder {
+            0% {
+                /* transform: scale(1); */
+                box-shadow:
+                    0 0 4px rgba(255, 59, 59, 0.4),
+                    inset 0 0 2px rgba(255, 59, 59, 0.4);
+            }
+
+            50% {
+                /* transform: scale(1.04); */
+                box-shadow:
+                    0 0 14px rgba(255, 59, 59, 0.9),
+                    inset 0 0 6px rgba(255, 122, 122, 0.8);
+            }
+
+            100% {
+                /* transform: scale(1); */
+                box-shadow:
+                    0 0 4px rgba(255, 59, 59, 0.4),
+                    inset 0 0 2px rgba(255, 59, 59, 0.4);
+            }
+        }
+
+        
+
+        /* Smooth fade in-out */
+        @keyframes smoothBlink {
+            0% {
+                opacity: 1;
+                box-shadow: 0 0 0 rgba(255, 157, 0, 0);
+            }
+
+            50% {
+                opacity: 0.4;
+                box-shadow: 0 0 10px rgba(255, 157, 0, 0.7);
+            }
+
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 0 rgba(255, 157, 0, 0);
+            }
+        }
+
+        .warning-card {
+            width: 320px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(255, 157, 0, 0.25);
+            border: 1px solid rgba(255, 157, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #000000;
+            animation: smoothBlink 1.8s ease-in-out infinite;
+        }
+
+
+        .critical-card {
+            width: 320px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(255, 59, 59, 0.25);
+            border: 1px solid rgba(255, 59, 59, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ff3b3b;
+            animation: criticalBlink 1.2s ease-in-out infinite;
+        }
+        img {
+            height: 120px;
+            width: 150px;
+        }
+
+        /* Blink lebih cepat & tegas */
+        @keyframes criticalBlink {
+            0% {
+                opacity: 1;
+                box-shadow: 0 0 0 rgba(255, 59, 59, 0);
+            }
+
+            50% {
+                opacity: 0.35;
+                box-shadow: 0 0 10px rgba(255, 59, 59, 0.9);
+            }
+
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 0 rgba(255, 59, 59, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 50px;">
+        <div id="my-text" style="color: aliceblue; font-size: 30px; margin-bottom: 15px;">Kamu sayang aku gak sayang?</div>
+        <img  id="img" src="image/img1.jpg" alt="">
+    </div>
+    <div style="display: flex; flex-direction: row; gap: 12px; justify-content: center;">
+        <div id = "btn_y" class="warning-card" style="cursor: pointer;">
+            Ya
+        </div>
+        <br>
+        <div id="btn" class="critical-card">
+            Tidak
+        </div>
+    </div>
+</body>
+
+<script>
+  const img = document.getElementById("img");
+  const btn = document.getElementById("btn");
+  const btn_y = document.getElementById("btn_y");
+  const my_text = document.getElementById("my-text");
+
+  let n = 1;
+  let text_btn_n = {'1':'Tidak', '2': 'Please jangan tidak', '3': 'Please jangan tidak sayang...'}
+  function bottonPos(){
+    const maxX = window.innerWidth - btn.offsetWidth;
+    const maxY = window.innerHeight - btn.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+    btn.style.position = 'absolute'
+    btn.style.padding = '10px 20px'
+    btn.style.cursor = 'pointer'
+    btn.style.left = randomX + "px";
+    btn.style.top = randomY + "px";
+  }
+
+  
+
+  btn.addEventListener("click", () => {
+    n += 1;
+
+    if (n <= 3) {
+        btn.innerText = text_btn_n[String(n)]
+        img.src = `image/img${n}.jpg`;
+    }
+    if (n === 4) {
+        bottonPos();
+    }
+  });
+  btn.addEventListener("mouseenter", () => {
+    if (n > 3 && n < 1000) {
+        bottonPos();
+    }
+  });
+
+  btn_y.addEventListener("click", () => {
+        n = 1000;
+        img.src = `image/img0.jpg`;
+        my_text.innerText = `Terima kasih sayang... saya juga sayang km kok 😘`;
+        btn.style.position = ''
+        btn.style.padding = ''
+        btn.style.cursor = ''
+        btn.innerText = 'Tidak'
+  });
+</script>
+
+</html>
