@@ -8,6 +8,12 @@
     <title>Derojatul Jannah</title>
     <link rel="icon" type="image/png" href="image/img1.png">
     <style>
+        :root{
+            --value-flip: 1;
+            --slide-distance: 0;
+        }
+
+
         body {
             font-family: Arial, sans-serif;
             background: #27263e;
@@ -89,6 +95,7 @@
             letter-spacing: 1px;
             color: #ff3b3b;
             animation: criticalBlink 1.2s ease-in-out infinite;
+            cursor: pointer;
         }
         .main-img {
             height: 160px;
@@ -103,6 +110,8 @@
             height: 70px;
             width: 70px;
             margin-bottom: 5px;
+        }
+        .slide-animation{
             animation: slideLoop 1s linear infinite alternate;
         }
 
@@ -126,10 +135,10 @@
 
         @keyframes slideLoop  {
             from {
-                transform: translateX(0);
+                transform: translateX(0) scaleX(var(--value-flip));
             }
             to {
-                transform: translateX(var(--slide-distance));
+                transform: translateX(var(--slide-distance)) scaleX(var(--value-flip));
             }
         }
     </style>
@@ -168,68 +177,73 @@
 </body>
 
 <script>
-  const img = document.getElementById("img");
-  const btn = document.getElementById("btn");
-  const btn_y = document.getElementById("btn_y");
-  const my_text = document.getElementById("my-text");
-  const footer_img2 = document.querySelector(".footer-img2");
-  const parent_img_left = document.getElementById("parent-img-left");
-  const parent_img_right = document.getElementById("parent-img-right");
-  const slide_distance = parent_img_left.offsetWidth - parent_img_right.offsetWidth - 10;
-  const speed = 60; // pixel per detik (ubah sesuai kebutuhan)
-  const duration = slide_distance / speed;
-  
-  footer_img2.style.setProperty("--slide-distance", slide_distance + "px");
-  footer_img2.style.animationDuration = duration + "s";
+    const img = document.getElementById("img");
+    const btn = document.getElementById("btn");
+    const btn_y = document.getElementById("btn_y");
+    const my_text = document.getElementById("my-text");
+    const footer_img2 = document.querySelector(".footer-img2");
+    const parent_img_left = document.getElementById("parent-img-left");
+    const parent_img_right = document.getElementById("parent-img-right");
+    const slide_distance = parent_img_left.offsetWidth - parent_img_right.offsetWidth - 10;
+    const speed = 60; // pixel per detik (ubah sesuai kebutuhan)
+    const duration = slide_distance / speed;
 
-  let setItv;
+    footer_img2.style.setProperty("--slide-distance", slide_distance + "px");
+    footer_img2.style.animationDuration = duration + "s";
+    let flipped = false;
+    parent_img_left.addEventListener("animationiteration", () => {
+        flipped = !flipped;
+        footer_img2.style.setProperty("--value-flip", flipped ? "-1" : "1");
+    });
 
-  let n = 1;
-  let text_btn_n = {'1':'Tidak', '2': 'Please jangan tidak', '3': 'Please jangan tidak sayang...'}
-  function bottonPos(){
-    const maxX = window.innerWidth - btn.offsetWidth;
-    const maxY = window.innerHeight - btn.offsetHeight;
+    let setItv;
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-    btn.style.position = 'absolute'
-    btn.style.padding = '10px 20px'
-    btn.style.cursor = 'pointer'
-    btn.style.zIndex = '50'
-    btn.style.left = randomX + "px";
-    btn.style.top = randomY + "px";
-  }
+    let n = 1;
+    let text_btn_n = { '1': 'Tidak', '2': 'Please jangan tidak', '3': 'Please jangan tidak sayang...' }
+    function bottonPos() {
+        const maxX = window.innerWidth - btn.offsetWidth;
+        const maxY = window.innerHeight - btn.offsetHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+        btn.style.position = 'absolute'
+        btn.style.padding = '10px 20px'
+        btn.style.cursor = 'pointer'
+        btn.style.zIndex = '50'
+        btn.style.left = randomX + "px";
+        btn.style.top = randomY + "px";
+    }
 
     function isMobile() {
         return window.innerWidth <= 1000;
     }
 
-  
 
-  btn.addEventListener("click", () => {
-    n += 1;
 
-    if (n <= 3) {
-        btn.innerText = text_btn_n[String(n)]
-        img.src = `image/img${n}.png`;
-    }
-    if (n === 4) {
-        bottonPos();
-        if (isMobile()) {
-           setItv = setInterval(() => {
-                bottonPos();
-            }, 1000); 
+    btn.addEventListener("click", () => {
+        n += 1;
+
+        if (n <= 3) {
+            btn.innerText = text_btn_n[String(n)]
+            img.src = `image/img${n}.png`;
         }
-    }
-  });
-  btn.addEventListener("mouseenter", () => {
-    if (n > 3 && n < 1000) {
-        bottonPos();
-    }
-  });
+        if (n === 4) {
+            bottonPos();
+            if (isMobile()) {
+                setItv = setInterval(() => {
+                    bottonPos();
+                }, 1000);
+            }
+        }
+    });
+    btn.addEventListener("mouseenter", () => {
+        if (n > 3 && n < 1000) {
+            bottonPos();
+        }
+    });
 
-  btn_y.addEventListener("click", () => {
-    clearInterval(setItv)
+    btn_y.addEventListener("click", () => {
+        clearInterval(setItv)
         n = 1000;
         img.src = `image/img0.png`;
         my_text.innerText = `Terima kasih sayang... aku juga sayang kamu kok 😘`;
@@ -237,7 +251,8 @@
         btn.style.padding = ''
         btn.style.cursor = ''
         btn.innerText = 'Tidak'
-  });
+        footer_img2.classList.add('slide-animation');
+    });
 </script>
 
 </html>
